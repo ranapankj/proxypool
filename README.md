@@ -74,7 +74,25 @@ source.yaml 文件中定义了抓取源，需要定期手动维护更新
 ```shell
 proxypool -c config.yaml
 ```
+使用docker
+运行下面的命令下载 proxypool 镜像
 
+$ docker pull lukemin/ssrlive-proxypool
+下载config.yaml&source.yaml到/path/to/config
+
+$ wget https://raw.githubusercontent.com/ssrlive/proxypool/master/config/config.yaml
+wget https://raw.githubusercontent.com/ssrlive/proxypool/master/config/source.yaml
+然后运行 proxypool 即可
+
+$ docker run -d --restart=always \
+  --name=proxypool \
+  -p 12580:12580 \
+  -v /path/to/config:/config \
+  lukemin/ssrlive-proxypool \
+  -c /config/config.yaml
+使用 -p 参数映射配置文件里的端口
+使用 -v 参数指定配置文件夹位置（配置文件要自行下载放到目录,方便修改）
+使用 -c 参数指定配置文件路径，支持http链接
 ## 截图
 
 ![Speedtest](docs/speedtest.png)
@@ -85,4 +103,4 @@ proxypool -c config.yaml
 
 本项目遵循 GNU General Public License v3.0 开源，在此基础上，所有使用本项目提供服务者都必须在网站首页保留指向本项目的链接
 
-禁止使用本项目进行营利和做其他违法事情，产生的一切后果本项目概不负责
+禁止使用本项目进行营利和做其他违法事情，产生的一切后果本项目概不负责M
